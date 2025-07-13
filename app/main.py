@@ -18,7 +18,7 @@ app = FastAPI(
 origins = [
     "http://localhost:3000",     # your frontend dev server
     "http://127.0.0.1:3000",     # alternative local frontend
-    "https://r3lbzzj7-5000.uks1.devtunnels.ms/"  # production frontend URL
+    "https://forecasting-teal.vercel.app"  # production frontend URL
 ]
 
 app.add_middleware(
