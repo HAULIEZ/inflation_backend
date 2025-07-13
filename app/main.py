@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 from app.Database import test_connection
 from app.authentication import get_user, sign_in, sign_up
-from app.management import feature_insert, get_features
+from app.management import feature_insert, get_features, reports
 from app.model_api import analysis, model_api, model_new_feature
 
 # Initialize FastAPI app
@@ -45,6 +45,7 @@ app.include_router(get_user.router)
 # Feature data management routes
 app.include_router(feature_insert.router)
 app.include_router(get_features.router)
+app.include_router(reports.router)
 
 # model API routes 
 app.include_router(model_api.router)
