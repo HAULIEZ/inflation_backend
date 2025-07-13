@@ -1,0 +1,63 @@
+-- Drop tables if they exist
+DROP TABLE IF EXISTS user_feature_inputs CASCADE;
+DROP TABLE IF EXISTS password_reset_tokens CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+
+-- Create users table
+CREATE TABLE users (
+    user_id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    first_name VARCHAR(100),
+    last_name VARCHAR(100),
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create password_reset_tokens table
+CREATE TABLE password_reset_tokens (
+    token_id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(user_id) ON DELETE CASCADE,
+    token VARCHAR(255) UNIQUE NOT NULL,
+    expires_at TIMESTAMPTZ NOT NULL,
+    used BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create user_feature_inputs table
+CREATE TABLE user_feature_inputs (
+    input_id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(user_id) ON DELETE SET NULL,
+    input_date TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+
+    -- Date parts
+    year INT NOT NULL,
+    month INT NOT NULL,
+    day INT NOT NULL,
+
+    -- Features
+    advances_by_banks FLOAT,
+    auto_sales FLOAT,
+    consumer_confidence_index FLOAT,
+    call_money_rate_end_of_period FLOAT,
+    imf_commodity_prices FLOAT,
+    national_consumer_price_index FLOAT,
+    deposit_rate FLOAT,
+    economic_policy_uncertainty FLOAT,
+    stock_exchange_100_index FLOAT,
+    one_year_interest_rate FLOAT,
+    lending_rate FLOAT,
+    international_oil_prices FLOAT,
+    sbp_policy_rate FLOAT,
+    public_sector_borrowing FLOAT,
+    real_output_quantum_index_of_large_scale_manufacturing_industries FLOAT,
+    real_effective_exchange_rate FLOAT,
+
+    -- Engineered features
+    interest_rate_spread FLOAT,
+    inflation_expectations FLOAT,
+    banking_activity_index FLOAT,
+    stock_market_volatility FLOAT,
+    commodity_price_index FLOAT
+);
