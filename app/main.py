@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from app.Database import test_connection
 from app.authentication import get_user, sign_in, sign_up
 from app.management import feature_insert, get_features, reports
-from app.model_api import analysis, model_api, model_new_feature
+from app.model_api import features_prediction, inflation_prediction, main_predictions, reports_gen
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -47,7 +47,8 @@ app.include_router(feature_insert.router)
 app.include_router(get_features.router)
 app.include_router(reports.router)
 
-# model API routes 
-app.include_router(model_api.router)
-app.include_router(model_new_feature.router)
-app.include_router(analysis.router)
+# Model API routes
+app.include_router(features_prediction.router, tags=["Model API"])
+app.include_router(inflation_prediction.router, tags=["Model API"])
+app.include_router(main_predictions.router, tags=["Model API"])
+app.include_router(reports_gen.router, tags=["Model API"])
